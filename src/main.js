@@ -6,6 +6,7 @@ import { links } from "./data/links.js";
 import { renderBrandIcon, brandIconClass } from "./icons/brands.js";
 import { uiIcons } from "./icons/ui.js";
 import { initChatbot } from "./chatbot/chatbot.js";
+import { initMusicPlayer } from "./music/music-player.js";
 
 function renderSocialLinks() {
   return socialLinks
@@ -96,6 +97,15 @@ document.querySelector("#app").innerHTML = `
         <button
           class="icon-button"
           type="button"
+          aria-label="Reproducir música"
+          id="music-toggle"
+        >
+          ${uiIcons.musicNote}
+        </button>
+
+        <button
+          class="icon-button"
+          type="button"
           aria-label="Cambiar apariencia"
           id="theme-toggle"
         >
@@ -165,3 +175,6 @@ themeToggle?.addEventListener("click", () => {
 
 // Jhon's Assistant
 initChatbot();
+
+// Music player
+initMusicPlayer();

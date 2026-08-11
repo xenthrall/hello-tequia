@@ -14,6 +14,25 @@ export const uiIcons = {
   `,
   arrow: "↗",
   menu: "⋮",
+  musicNote: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M9 17V5.5l9-2v11.5"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <circle cx="6.5" cy="17" r="2.5" stroke="currentColor" stroke-width="1.8" />
+      <circle cx="15.5" cy="15" r="2.5" stroke="currentColor" stroke-width="1.8" />
+    </svg>
+  `,
+  musicPause: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor" />
+      <rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor" />
+    </svg>
+  `,
   close: `
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
       <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
