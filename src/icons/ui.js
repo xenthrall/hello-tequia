@@ -12,24 +12,22 @@ export const uiIcons = {
       <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8" />
     </svg>
   `,
-  share: `
+  arrow: "↗",
+  menu: "⋮",
+  close: `
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-      <path d="M12 16V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+    </svg>
+  `,
+  send: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
       <path
-        d="M7.5 8.5 12 4l4.5 4.5"
+        d="M4 12 20 5l-6.5 16-2.5-6.5L4 12Z"
         stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
+        stroke-width="1.6"
         stroke-linejoin="round"
-      />
-      <path
-        d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"
-        stroke="currentColor"
-        stroke-width="1.8"
         stroke-linecap="round"
       />
     </svg>
   `,
-  arrow: "↗",
-  menu: "⋮",
 };

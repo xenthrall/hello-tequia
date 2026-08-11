@@ -18,10 +18,6 @@ export const links = [
     icon: siWhatsapp,
   },
   {
-    title: "tequia.dev",
-    url: "https://tequia.dev",
-  },
-  {
     title: "GitHub",
     url: "https://github.com/xenthrall",
     icon: siGithub,

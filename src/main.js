@@ -5,6 +5,7 @@ import { socialLinks } from "./data/social-links.js";
 import { links } from "./data/links.js";
 import { renderBrandIcon, brandIconClass } from "./icons/brands.js";
 import { uiIcons } from "./icons/ui.js";
+import { initChatbot } from "./chatbot/chatbot.js";
 
 function renderSocialLinks() {
   return socialLinks
@@ -100,15 +101,6 @@ document.querySelector("#app").innerHTML = `
         >
           ${uiIcons.theme}
         </button>
-
-        <button
-          class="icon-button"
-          type="button"
-          aria-label="Compartir perfil"
-          id="share-button"
-        >
-          ${uiIcons.share}
-        </button>
       </header>
 
 
@@ -158,31 +150,6 @@ document.querySelector("#app").innerHTML = `
   </main>
 `;
 
-// Share button
-const shareButton = document.querySelector("#share-button");
-
-shareButton?.addEventListener("click", async () => {
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: profile.name,
-        text: "Conoce mis proyectos, servicios y enlaces.",
-        url: window.location.href,
-      });
-    } else {
-      await navigator.clipboard.writeText(window.location.href);
-
-      shareButton.classList.add("copied");
-
-      setTimeout(() => {
-        shareButton.classList.remove("copied");
-      }, 1500);
-    }
-  } catch {
-    // User cancelled sharing.
-  }
-});
-
 // Theme toggle with persisted preference
 const themeToggle = document.querySelector("#theme-toggle");
 
@@ -195,3 +162,6 @@ themeToggle?.addEventListener("click", () => {
     // Storage unavailable (e.g. private browsing).
   }
 });
+
+// Jhon's Assistant
+initChatbot();
