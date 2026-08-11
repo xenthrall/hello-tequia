@@ -10,12 +10,20 @@
 
     <meta
       name="description"
-      content="Hello Tequia — enlaces, proyectos y servicios de Jhon."
+      content="Jhon Tequia — enlaces, proyectos y servicios de Jhon."
     />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
 
-    <title>Hello Tequia</title>
+    <title>Jhon Tequia</title>
+
+    <script>
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.classList.add("light-mode");
+        }
+      } catch {}
+    </script>
   </head>
 
   <body>
