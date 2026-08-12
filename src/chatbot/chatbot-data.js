@@ -90,17 +90,17 @@ export const intents = [
       "Atlas es una plataforma base orientada a construir sistemas modulares y altamente extensibles. Funciona como base tecnológica para distintos productos, con foco en arquitectura modular, extensibilidad, reutilización, multi-tenancy y sistemas empresariales.",
   },
   {
-    id: "cronosena",
-    keywords: ["cronosena", "crono sena"],
+    id: "nexo",
+    keywords: ["nexo", "Educativa", "plataforma educativa", "plataforma de gestion educativa"],
     response:
-      "CronoSENA es una plataforma orientada a la gestión académica y administrativa de instituciones de formación técnica. Está construida sobre Atlas como plataforma base, y uno de sus primeros objetivos es un MVP de gestión documental y articulación con educación media.",
+      "Nexo es una plataforma orientada a la gestión académica y administrativa de instituciones de formación técnica. Está construida sobre Atlas como plataforma base, y uno de sus primeros objetivos es un MVP de gestión documental y articulación con educación media.",
   },
   {
     id: "projects",
     keywords: ["proyectos", "que construye", "en que trabaja", "que esta construyendo", "que esta creando"],
     response:
-      "Actualmente Jhon está construyendo Atlas, una plataforma base modular, y CronoSENA, un sistema de gestión académica y administrativa para instituciones de formación.",
-    quickReplies: ["Cuéntame de Atlas", "¿Qué es CronoSENA?"],
+      "Actualmente Jhon está construyendo Atlas, una plataforma base modular, y Nexo, un sistema de gestión académica y administrativa para instituciones de formación.",
+    quickReplies: ["Cuéntame de Atlas", "¿Qué es Nexo?"],
   },
   {
     id: "services",
