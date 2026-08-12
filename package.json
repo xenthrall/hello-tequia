@@ -12,6 +12,7 @@
     "vite": "^8.2.0"
   },
   "dependencies": {
+    "@formspree/ajax": "^1.1.5",
     "@tailwindcss/vite": "^4.3.3",
     "simple-icons": "^16.28.0",
     "tailwindcss": "^4.3.3"

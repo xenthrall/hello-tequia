@@ -21,6 +21,11 @@
   --soft: #737373;
   --accent: #8b5cf6;
   --accent-rgb: 139, 92, 246;
+
+  --success: #34d399;
+  --success-rgb: 52, 211, 153;
+  --danger: #f87171;
+  --danger-rgb: 248, 113, 113;
 }
 
 
@@ -1213,6 +1218,11 @@ button {
   --text: #18181b;
   --muted: #71717a;
   --soft: #a1a1aa;
+
+  --success: #059669;
+  --success-rgb: 5, 150, 105;
+  --danger: #dc2626;
+  --danger-rgb: 220, 38, 38;
 }
 
 .light-mode body {
