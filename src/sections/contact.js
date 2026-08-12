@@ -103,14 +103,6 @@ function render() {
         </p>
 
         <div
-          data-fs-success
-          aria-live="polite"
-          class="mt-5 hidden items-center gap-2 rounded-xl border border-[rgb(var(--success-rgb)/0.3)] bg-[rgb(var(--success-rgb)/0.12)] px-4 py-3 text-sm text-[var(--success)] data-[fs-active]:flex"
-        >
-          ¡Gracias por tu mensaje! Te responderé pronto.
-        </div>
-
-        <div
           data-fs-error
           aria-live="polite"
           class="mt-5 hidden items-center gap-2 rounded-xl border border-[rgb(var(--danger-rgb)/0.3)] bg-[rgb(var(--danger-rgb)/0.12)] px-4 py-3 text-sm text-[var(--danger)] data-[fs-active]:flex"
@@ -118,25 +110,27 @@ function render() {
           Ocurrió un error al enviar tu mensaje. Intenta de nuevo o escríbeme por WhatsApp.
         </div>
 
-        <form id="contact-form" class="mt-5 flex flex-col gap-4">
-          ${fields.map((field) => renderContactField(field)).join("")}
+        <div id="contact-form-area" aria-live="polite">
+          <form id="contact-form" class="mt-5 flex flex-col gap-4">
+            ${fields.map((field) => renderContactField(field)).join("")}
 
-          <button
-            type="submit"
-            data-fs-submit-btn
-            class="group mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#a78bfa] to-[#6d28d9] px-4 py-2.5 text-sm font-medium text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
-          >
-            <span class="group-disabled:hidden">Enviar mensaje</span>
+            <button
+              type="submit"
+              data-fs-submit-btn
+              class="group mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#a78bfa] to-[#6d28d9] px-4 py-2.5 text-sm font-medium text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+            >
+              <span class="group-disabled:hidden">Enviar mensaje</span>
 
-            <span class="hidden items-center gap-2 group-disabled:inline-flex" aria-hidden="true">
-              <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-              </svg>
-              Enviando...
-            </span>
-          </button>
-        </form>
+              <span class="hidden items-center gap-2 group-disabled:inline-flex" aria-hidden="true">
+                <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                Enviando...
+              </span>
+            </button>
+          </form>
+        </div>
       </div>
 
       <div class="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-center shadow-[0_10px_35px_rgba(0,0,0,0.12)] backdrop-blur-xl sm:p-6">
@@ -156,11 +150,55 @@ function render() {
   `;
 }
 
+function renderThankYouMessage() {
+  return `
+    <div class="mt-5 flex flex-col items-center gap-3 py-4 text-center">
+      <span class="grid h-12 w-12 place-items-center rounded-full border border-[rgb(var(--success-rgb)/0.3)] bg-[rgb(var(--success-rgb)/0.12)] text-[var(--success)]">
+        <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" aria-hidden="true">
+          <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+
+      <h4 class="text-base font-semibold text-[var(--text)]">¡Mensaje enviado!</h4>
+
+      <p class="max-w-xs text-sm leading-relaxed text-[var(--muted)]">
+        Gracias por escribirme. Leo cada mensaje con calma y te responderé muy pronto para
+        conversar sobre tu idea.
+      </p>
+    </div>
+  `;
+}
+
+// Formspree/ajax's default disable()/enable() read and rewrite the submit
+// button's textContent, which merges our two <span> states (label + spinner)
+// into one flat string and corrupts the button on re-enable. We replace both
+// with versions that only toggle the `disabled` attribute.
+function disableSubmit({ form }) {
+  form.setAttribute("aria-busy", "true");
+  form.querySelectorAll("[data-fs-submit-btn]").forEach((button) => {
+    button.disabled = true;
+  });
+}
+
+function enableSubmit({ form }) {
+  form.removeAttribute("aria-busy");
+  form.querySelectorAll("[data-fs-submit-btn]").forEach((button) => {
+    button.disabled = false;
+  });
+}
+
 function init() {
+  const formArea = document.querySelector("#contact-form-area");
+
   initForm({
     formElement: "#contact-form",
     formId: contact.formspreeId,
     useDefaultStyles: false,
+    disable: disableSubmit,
+    enable: enableSubmit,
+    onSuccess: () => {
+      if (formArea) formArea.innerHTML = renderThankYouMessage();
+    },
   });
 }
 
