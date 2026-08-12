@@ -1,4 +1,4 @@
-import { siWhatsapp, siGithub } from "simple-icons";
+import { siInstagram ,siWhatsapp, siGithub } from "simple-icons";
 
 // Enlaces mostrados en la sección de links.
 // Para agregar un enlace nuevo, agrega un objeto a este arreglo con al
@@ -8,9 +8,8 @@ import { siWhatsapp, siGithub } from "simple-icons";
 export const links = [
   {
     title: "Instagram",
-    description: "Sígueme y conoce lo que estoy construyendo",
     url: "https://instagram.com/tequia.dev",
-    featured: true,
+    icon: siInstagram,
   },
   {
     title: "WhatsApp",
