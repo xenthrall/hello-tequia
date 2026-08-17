@@ -8,7 +8,7 @@ export function renderMascotIcon() {
   const gradientId = `mascot-gradient-${instances++}`;
 
   return `
-    <svg viewBox="30 17 120 105" role="img" aria-hidden="true" focusable="false">
+    <svg viewBox="30 17 120 105" role="img" aria-hidden="true" focusable="false" class="block h-full w-full">
       <defs>
         <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#c084fc" />

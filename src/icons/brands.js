@@ -8,8 +8,12 @@ export function renderBrandIcon(icon) {
   `;
 }
 
-// Clase CSS derivada del slug del icono (p.ej. "github" -> "github-icon"),
-// usada para permitir branding puntual por icono en style.css.
-export function brandIconClass(icon) {
-  return `${icon.slug}-icon`;
+// Color de marca puntual por icono (p.ej. WhatsApp en su verde característico).
+// Los slugs sin entrada aquí simplemente heredan el color del texto.
+const brandAccentColors = {
+  whatsapp: "text-[#25d366]",
+};
+
+export function brandIconAccentClass(icon) {
+  return brandAccentColors[icon.slug] ?? "";
 }

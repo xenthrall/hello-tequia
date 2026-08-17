@@ -37,6 +37,8 @@ export async function initMusicPlayer() {
 
   function setPlaying(isPlaying) {
     button.classList.toggle("is-playing", isPlaying);
+    button.classList.toggle("text-[var(--accent)]", isPlaying);
+    button.classList.toggle("border-[rgb(var(--accent-rgb)/0.4)]", isPlaying);
     button.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
     button.innerHTML = isPlaying ? uiIcons.musicPause : uiIcons.musicNote;
 
