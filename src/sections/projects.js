@@ -18,20 +18,44 @@ function renderProjectTechnologies(technologies) {
     .join("");
 }
 
+function renderProjectCta(project) {
+  if (!project.url) return "";
+
+  return `
+    <span
+      class="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full bg-[rgb(var(--accent-rgb)/0.14)] px-3 py-1.5 text-xs font-semibold text-[var(--accent)] transition duration-200 group-hover:gap-2 group-hover:bg-[rgb(var(--accent-rgb)/0.22)]"
+    >
+      Ver proyecto
+      <span aria-hidden="true" class="transition-transform duration-200 group-hover:translate-x-0.5">${uiIcons.arrow}</span>
+    </span>
+  `;
+}
+
 function renderProjectCard(project) {
-  const tag = project.url ? "a" : "div";
-  const linkAttrs = project.url
+  const isLink = Boolean(project.url);
+  const tag = isLink ? "a" : "div";
+  const linkAttrs = isLink
     ? `href="${project.url}" target="_blank" rel="noopener noreferrer"`
     : "";
 
-  const featuredClasses = project.featured
-    ? "border-[rgb(var(--accent-rgb)/0.3)] hover:border-[rgb(var(--accent-rgb)/0.5)]"
-    : "border-[var(--border)]";
+  const cardClasses = [
+    "group relative flex flex-col gap-3 rounded-2xl border bg-[var(--card)] p-4 text-inherit no-underline shadow-[0_10px_35px_rgba(0,0,0,0.12)] backdrop-blur-xl transition duration-200",
+    project.featured
+      ? "border-[rgb(var(--accent-rgb)/0.3)]"
+      : "border-[var(--border)]",
+    project.featured ? "sm:col-span-2" : "",
+    isLink
+      ? "cursor-pointer hover:-translate-y-0.5 hover:bg-[var(--card-hover)] active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent-rgb)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
+      : "",
+    isLink && project.featured ? "hover:border-[rgb(var(--accent-rgb)/0.5)]" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return `
     <${tag}
       ${linkAttrs}
-      class="group relative flex flex-col gap-3 rounded-2xl border bg-[var(--card)] p-4 text-inherit no-underline shadow-[0_10px_35px_rgba(0,0,0,0.12)] backdrop-blur-xl transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--card-hover)] ${featuredClasses}"
+      class="${cardClasses}"
     >
       <div class="flex items-start justify-between gap-3">
         <h3 class="text-sm font-semibold text-[var(--text)]">${project.title}</h3>
@@ -50,15 +74,13 @@ function renderProjectCard(project) {
 
       <p class="text-xs leading-relaxed text-[var(--muted)]">${project.description}</p>
 
-      <div class="mt-auto flex flex-wrap gap-1.5">
-        ${renderProjectTechnologies(project.technologies)}
-      </div>
+      <div class="mt-auto flex flex-col gap-2.5 ${project.featured ? "sm:flex-row sm:items-center sm:justify-between sm:gap-3" : ""}">
+        <div class="flex flex-wrap gap-1.5">
+          ${renderProjectTechnologies(project.technologies)}
+        </div>
 
-      ${
-        project.url
-          ? `<span class="absolute bottom-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-[var(--card-hover)] text-[var(--muted)] opacity-0 transition duration-200 group-hover:opacity-100" aria-hidden="true">${uiIcons.arrow}</span>`
-          : ""
-      }
+        ${renderProjectCta(project)}
+      </div>
     </${tag}>
   `;
 }
@@ -70,7 +92,7 @@ function render() {
         Proyectos
       </h2>
 
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div class="grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2">
         ${projects.map((project) => renderProjectCard(project)).join("")}
       </div>
     </section>
