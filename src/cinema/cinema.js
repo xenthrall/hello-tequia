@@ -6,8 +6,9 @@
 //   - pauseCinema()  cuando la música se pausa: la capa NO se oculta, se
 //                     congela en el capítulo actual (útil para leer con
 //                     calma), y las animaciones en bucle se detienen.
-// El botón "X" dentro de la propia capa llama a exitCinema(), que sí la
-// oculta del todo y regresa al portafolio normal, sin tocar el audio.
+// El botón "X" (o Escape) dentro de la propia capa llama a exitCinema(),
+// que oculta la capa, regresa al portafolio normal y pausa la música: la
+// música solo suena mientras el modo cine está presente.
 import { renderBrandIcon } from "../icons/brands.js";
 import { uiIcons } from "../icons/ui.js";
 import { renderMascot } from "./mascot-expressions.js";
@@ -169,7 +170,7 @@ function startChapter(index) {
 }
 
 function updatePauseToggle() {
-  els.pauseToggle.innerHTML = isRunning ? uiIcons.musicPause : uiIcons.musicNote;
+  els.pauseToggle.innerHTML = isRunning ? uiIcons.playerPause : uiIcons.playerPlay;
   els.pauseToggle.setAttribute("aria-label", isRunning ? "Pausar música" : "Reanudar música");
 }
 
@@ -256,7 +257,7 @@ export function mountCinemaLayer() {
         class="cinema-pause-toggle grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--muted)] backdrop-blur-md transition hover:bg-[var(--card-hover)] hover:text-[var(--text)] [&_svg]:h-4 [&_svg]:w-4"
         aria-label="Pausar música"
       >
-        ${uiIcons.musicPause}
+        ${uiIcons.playerPause}
       </button>
       <button
         type="button"
@@ -323,9 +324,18 @@ export function pauseCinema() {
 }
 
 // El usuario pidió salir explícitamente (botón "X" o Escape): oculta la
-// capa por completo y regresa al portafolio real. No toca el audio.
+// capa por completo, regresa al portafolio real y pausa la música — la
+// música solo debería sonar mientras el modo cine está presente (aunque
+// esté congelado).
 export function exitCinema() {
   if (!mounted || !isShown) return;
+
+  if (document.documentElement.classList.contains("music-playing")) {
+    // Dispara audio.pause() en el reproductor real, que a su vez llama
+    // pauseCinema() (congela) antes de que sigamos con hideOverlay().
+    document.querySelector("#music-toggle")?.click();
+  }
+
   if (isRunning) freeze();
   hideOverlay();
 }

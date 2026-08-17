@@ -1,3 +1,14 @@
+import tablerPlayerPlay from "@tabler/icons/outline/player-play.svg?raw";
+import tablerPlayerPause from "@tabler/icons/outline/player-pause.svg?raw";
+
+// Los SVG de @tabler/icons traen width/height fijos (24) y sin
+// aria-hidden; los adaptamos al mismo patrón que el resto de estos
+// iconos (tamaño lo decide el contenedor, decorativos para lectores
+// de pantalla).
+function fromTabler(svg) {
+  return svg.replace(/\s(width|height)="24"/g, "").replace("<svg", '<svg aria-hidden="true" focusable="false"');
+}
+
 // Iconos propios de la interfaz (no son iconos de marca).
 // Usan stroke/fill="currentColor" para adaptarse a dark/light mode.
 export const uiIcons = {
@@ -49,4 +60,9 @@ export const uiIcons = {
       />
     </svg>
   `,
+  // De @tabler/icons: se usan para el control de reproducir/pausar dentro
+  // del modo cine, donde un ícono de "play" claro comunica mejor "reanudar"
+  // que reutilizar el ícono de nota musical del botón real.
+  playerPlay: fromTabler(tablerPlayerPlay),
+  playerPause: fromTabler(tablerPlayerPause),
 };
