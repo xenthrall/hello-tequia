@@ -1,8 +1,9 @@
 // Guion del modo cine: capítulos que narran la historia de Jhon mientras
-// suena la música. Reutiliza los datos reales del portafolio (perfil,
-// proyectos, contacto) en vez de duplicarlos; el resto de la prosa
-// (trayectoria, formación, cierre) es texto curado nuevo con voz de
-// narrador, distinta de las respuestas utilitarias del chatbot.
+// suena la música. Reutiliza los datos reales del portafolio donde tiene
+// sentido (nombre, proyectos, contacto), pero no lee `profile.role` ni
+// `profile.description` tal cual — esa prosa es curada a mano con voz de
+// narrador (presentando a Jhon, no listando su ficha), igual que
+// trayectoria, formación y cierre.
 import { profile } from "../data/profile.js";
 import { projects } from "../data/projects.js";
 import { contact } from "../data/contact.js";
@@ -29,8 +30,8 @@ const roleChapter = {
   pose: "center",
   kicker: "Quién es",
   title: profile.name,
-  body: profile.role,
-  duration: 5200,
+  body: "No solo escribe código: construye. Convierte ideas en productos reales, con PHP y Laravel como oficio y la mentalidad de un builder de principio a fin.",
+  duration: 6800,
 };
 
 const missionChapter = {
@@ -40,8 +41,8 @@ const missionChapter = {
   pose: "center",
   kicker: "Su misión",
   title: "Construir con propósito",
-  body: profile.description,
-  duration: 6400,
+  body: "Cada proyecto arranca con la misma pregunta: ¿cómo construirlo para que crezca sin romperse? De ahí su gusto por las arquitecturas modulares y escalables — pensadas para durar, no solo para funcionar hoy.",
+  duration: 7100,
 };
 
 const experienceChapter = {
@@ -72,9 +73,22 @@ const skillsChapter = {
   expression: "energetic",
   pose: "center",
   kicker: "Su stack",
-  title: "Las herramientas de siempre",
-  body: "PHP y Laravel como base, acompañados de Livewire, Filament, Tailwind CSS, JavaScript, MySQL, PostgreSQL, Docker y Git.",
-  chips: ["PHP", "Laravel", "Livewire", "Filament", "Tailwind CSS", "JavaScript", "MySQL", "PostgreSQL", "Docker", "Git"],
+  title: "Laravel es el núcleo",
+  body: "PHP y Laravel forman el núcleo de su trabajo, con Livewire y Filament como parte de su stack habitual. En frontend trabaja con JavaScript y React, y utiliza Python para desarrollo general. PostgreSQL, MySQL, Tailwind CSS, Docker y Git completan las herramientas que utiliza para construir y mantener sus proyectos.",
+  chips: [
+    "PHP",
+    "Laravel",
+    "Livewire",
+    "Filament",
+    "JavaScript",
+    "React",
+    "Python",
+    "Tailwind CSS",
+    "PostgreSQL",
+    "MySQL",
+    "Docker",
+    "Git",
+  ],
   duration: 6600,
 };
 
