@@ -9,7 +9,7 @@ const whatsappContactUrl = `https://wa.me/${contact.whatsapp.number}?text=${enco
 function renderContactField({ id, name, label, type, required, optional, autocomplete, placeholder }) {
   const isTextarea = type === "textarea";
 
-  const fieldClass = `w-full ${isTextarea ? "resize-none" : ""} rounded-xl border border-[var(--border)] bg-[var(--background)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--muted)] focus:border-transparent focus:ring-2 focus:ring-[rgb(var(--accent-rgb)/0.5)] aria-invalid:border-[var(--danger)] aria-invalid:focus:ring-[rgb(var(--danger-rgb)/0.4)]`;
+  const fieldClass = `w-full ${isTextarea ? "resize-none" : ""} rounded-xl border border-[var(--border)] bg-[var(--background)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--muted)] focus:border-transparent focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.5)] aria-invalid:border-[var(--danger)] aria-invalid:focus:ring-[rgba(var(--danger-rgb),0.4)]`;
 
   const fieldMarkup = isTextarea
     ? `<textarea
@@ -105,7 +105,7 @@ function render() {
         <div
           data-fs-error
           aria-live="polite"
-          class="mt-5 hidden items-center gap-2 rounded-xl border border-[rgb(var(--danger-rgb)/0.3)] bg-[rgb(var(--danger-rgb)/0.12)] px-4 py-3 text-sm text-[var(--danger)] data-[fs-active]:flex"
+          class="mt-5 hidden items-center gap-2 rounded-xl border border-[rgba(var(--danger-rgb),0.3)] bg-[rgba(var(--danger-rgb),0.12)] px-4 py-3 text-sm text-[var(--danger)] data-[fs-active]:flex"
         >
           Ocurrió un error al enviar tu mensaje. Intenta de nuevo o escríbeme por WhatsApp.
         </div>
@@ -153,7 +153,7 @@ function render() {
 function renderThankYouMessage() {
   return `
     <div class="mt-5 flex flex-col items-center gap-3 py-4 text-center">
-      <span class="grid h-12 w-12 place-items-center rounded-full border border-[rgb(var(--success-rgb)/0.3)] bg-[rgb(var(--success-rgb)/0.12)] text-[var(--success)]">
+      <span class="grid h-12 w-12 place-items-center rounded-full border border-[rgba(var(--success-rgb),0.3)] bg-[rgba(var(--success-rgb),0.12)] text-[var(--success)]">
         <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" aria-hidden="true">
           <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>

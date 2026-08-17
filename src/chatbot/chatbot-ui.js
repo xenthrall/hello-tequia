@@ -22,7 +22,7 @@ function renderLinks(links = []) {
               href="${link.url}"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--accent-rgb)/0.35)] bg-[rgb(var(--accent-rgb)/0.12)] px-2.5 py-[5px] text-[0.75rem] font-semibold text-[var(--text)] no-underline transition duration-150 hover:-translate-y-px hover:bg-[rgb(var(--accent-rgb)/0.22)]"
+              class="inline-flex items-center gap-1 rounded-full border border-[rgba(var(--accent-rgb),0.35)] bg-[rgba(var(--accent-rgb),0.12)] px-2.5 py-[5px] text-[0.75rem] font-semibold text-[var(--text)] no-underline transition duration-150 hover:-translate-y-px hover:bg-[rgba(var(--accent-rgb),0.22)]"
             >
               ${link.label} ${uiIcons.arrow}
             </a>
@@ -83,7 +83,7 @@ export function mountChatWidget() {
 
       <form
         id="chat-form"
-        class="flex shrink-0 items-center gap-2 border-t border-[var(--border)] p-3 pb-[calc(12px+env(safe-area-inset-bottom))] focus-within:rounded-2xl focus-within:ring-2 focus-within:ring-[rgb(var(--accent-rgb)/0.3)]"
+        class="flex shrink-0 items-center gap-2 border-t border-[var(--border)] p-3 pb-[calc(12px+env(safe-area-inset-bottom))] focus-within:rounded-2xl focus-within:ring-2 focus-within:ring-[rgba(var(--accent-rgb),0.3)]"
         autocomplete="off"
       >
         <input
@@ -138,7 +138,7 @@ export function appendMessage({ role, text, links = [] }) {
   }`;
 
   const bubbleClasses = isUser
-    ? `rounded-[16px_16px_4px_16px] border border-[rgb(var(--accent-rgb)/0.35)] bg-[rgb(var(--accent-rgb)/0.16)] px-[13px] py-2.5 ${bubbleShadow}`
+    ? `rounded-[16px_16px_4px_16px] border border-[rgba(var(--accent-rgb),0.35)] bg-[rgba(var(--accent-rgb),0.16)] px-[13px] py-2.5 ${bubbleShadow}`
     : `rounded-[16px_16px_16px_4px] border border-[var(--border)] bg-[var(--card)] px-[13px] py-2.5 ${bubbleShadow}`;
 
   wrapper.innerHTML = `
@@ -165,7 +165,7 @@ export function appendQuickReplies(questions, onSelect) {
     const button = document.createElement("button");
     button.type = "button";
     button.className =
-      "cursor-pointer rounded-full border border-[var(--border)] bg-[var(--card)] px-[13px] py-[7px] text-[0.78rem] font-semibold text-[var(--text)] transition duration-200 hover:-translate-y-0.5 hover:border-[rgb(var(--accent-rgb)/0.4)] hover:bg-[rgb(var(--accent-rgb)/0.14)]";
+      "cursor-pointer rounded-full border border-[var(--border)] bg-[var(--card)] px-[13px] py-[7px] text-[0.78rem] font-semibold text-[var(--text)] transition duration-200 hover:-translate-y-0.5 hover:border-[rgba(var(--accent-rgb),0.4)] hover:bg-[rgba(var(--accent-rgb),0.14)]";
     button.textContent = question;
     button.addEventListener("click", () => onSelect(question));
     wrapper.append(button);

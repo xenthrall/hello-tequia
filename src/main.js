@@ -4,6 +4,7 @@ import { profile } from "./data/profile.js";
 import { uiIcons } from "./icons/ui.js";
 import { initChatbot } from "./chatbot/chatbot.js";
 import { initMusicPlayer } from "./music/music-player.js";
+import { initCinema } from "./cinema/cinema.js";
 import { renderSections, initSections } from "./sections/index.js";
 
 const iconButtonClasses =
@@ -82,6 +83,9 @@ initChatbot();
 
 // Music player
 initMusicPlayer();
+
+// Modo cine (capa inmersiva que aparece mientras suena la música)
+initCinema();
 
 // Section-specific behavior (e.g. contact form submission)
 initSections();

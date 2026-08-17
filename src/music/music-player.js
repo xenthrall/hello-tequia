@@ -1,4 +1,5 @@
 import { uiIcons } from "../icons/ui.js";
+import { enterCinema, pauseCinema } from "../cinema/cinema.js";
 
 const CATALOG_URL = "/music.json";
 const BUTTON_ID = "music-toggle";
@@ -38,7 +39,7 @@ export async function initMusicPlayer() {
   function setPlaying(isPlaying) {
     button.classList.toggle("is-playing", isPlaying);
     button.classList.toggle("text-[var(--accent)]", isPlaying);
-    button.classList.toggle("border-[rgb(var(--accent-rgb)/0.4)]", isPlaying);
+    button.classList.toggle("border-[rgba(var(--accent-rgb),0.4)]", isPlaying);
     button.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
     button.innerHTML = isPlaying ? uiIcons.musicPause : uiIcons.musicNote;
 
@@ -46,6 +47,16 @@ export async function initMusicPlayer() {
     // este módulo necesite conocer su estructura (mismo patrón que
     // "light-mode" para el tema).
     document.documentElement.classList.toggle("music-playing", isPlaying);
+
+    // La música dispara el modo cine: se desvanece toda la UI y la
+    // mascota narra el portafolio. Al pausar, el cine se congela en su
+    // lugar (para leer con calma) en vez de cerrarse — salir del todo es
+    // una acción explícita del usuario (botón "X"/Escape dentro del cine).
+    if (isPlaying) {
+      enterCinema();
+    } else {
+      pauseCinema();
+    }
   }
 
   audio.addEventListener("ended", () => {

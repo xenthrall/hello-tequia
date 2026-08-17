@@ -11,7 +11,7 @@ function renderSocialLinks() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="${name}"
-          class="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--text)] backdrop-blur-[10px] transition duration-200 hover:-translate-y-[3px] hover:border-[rgb(var(--accent-rgb)/0.38)] hover:bg-[rgb(var(--accent-rgb)/0.16)] hover:text-white [&_svg]:h-5 [&_svg]:w-5"
+          class="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--text)] backdrop-blur-[10px] transition duration-200 hover:-translate-y-[3px] hover:border-[rgba(var(--accent-rgb),0.38)] hover:bg-[rgba(var(--accent-rgb),0.16)] hover:text-white [&_svg]:h-5 [&_svg]:w-5"
         >
           ${renderBrandIcon(icon)}
         </a>

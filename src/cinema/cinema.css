@@ -1,0 +1,248 @@
+/* =========================================================
+   Modo cine — estilos bespoke (geometría, keyframes) que no
+   valen la pena expresar como utilidades de Tailwind. El
+   layout/color de la capa vive como clases de Tailwind en
+   cinema.js; esto es solo lo verdaderamente animado/artesanal.
+   ========================================================= */
+
+/* Estado abierto/cerrado — mismo patrón que .chat-panel.is-open
+   en style.css: solo el delta, la base vive en cinema.js. */
+.cinema-layer.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.cinema-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* La UI real se desvanece detrás de la capa de cine. `visibility` va en la
+   lista de transición a propósito: el navegador la anima como propiedad
+   discreta (aparece de inmediato, desaparece al final), así que deja de
+   recibir foco/clics solo cuando ya terminó de disolverse. */
+html.cinema-active .page-shell {
+  filter: blur(24px) brightness(0.35) saturate(0.7);
+  transform: scale(0.97);
+  opacity: 0.55;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+html.cinema-active .chat-widget {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 300ms ease, visibility 300ms ease;
+}
+
+
+/* =========================================================
+   Estado congelado — la música está en pausa pero la capa
+   sigue visible (útil para leer con calma). Detiene las
+   animaciones en bucle en vez de recrear cada componente con
+   una variante "paused"; un único punto de control.
+   ========================================================= */
+
+.cinema-layer.is-frozen .cinema-mascot,
+.cinema-layer.is-frozen .cinema-particle,
+.cinema-layer.is-frozen .cinema-chip,
+.cinema-layer.is-frozen .mascot-gear {
+  animation-play-state: paused;
+}
+
+.cinema-layer.is-frozen .cinema-caret {
+  opacity: 0;
+}
+
+.cinema-paused-badge {
+  transition: opacity 300ms ease;
+}
+
+.cinema-layer.is-frozen .cinema-paused-badge {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   Barras de letterbox
+   ========================================================= */
+
+.cinema-letterbox {
+  height: clamp(20px, 6vw, 56px);
+  background: #000;
+  transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cinema-letterbox-top {
+  transform: translateY(-100%);
+}
+
+.cinema-letterbox-bottom {
+  transform: translateY(100%);
+}
+
+.cinema-layer.is-open .cinema-letterbox {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   Partículas ambientales
+   ========================================================= */
+
+.cinema-particle {
+  position: absolute;
+  bottom: -10%;
+  left: calc(4% + (var(--i) * 6%));
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.55);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.6);
+  opacity: 0;
+  animation: cinema-particle-drift calc(9s + (var(--i) * 0.6s)) ease-in infinite;
+  animation-delay: calc(var(--i) * -0.7s);
+}
+
+@keyframes cinema-particle-drift {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-115vh) scale(1);
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   Mascota — pose (posición) + respiración continua. El pose
+   usa `transform`, la respiración usa la propiedad `translate`
+   independiente para poder combinarse sin pisarse.
+   ========================================================= */
+
+.cinema-mascot {
+  filter:
+    drop-shadow(0 0 20px rgba(139, 92, 246, 0.5))
+    drop-shadow(0 0 46px rgba(124, 58, 237, 0.35));
+  transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: cinema-mascot-bob 4.2s ease-in-out infinite;
+}
+
+/* El contenedor ya es un flex (columna en mobile, fila en desktop) con la
+   mascota antes que la tarjeta de proyecto en el DOM. `order` es lo que
+   realmente la mueve "a donde corresponde" (izquierda/derecha en fila,
+   arriba/abajo en columna); el translateX en desktop es solo un empujón
+   sutil adicional, no el mecanismo principal — así nunca se sale de la
+   pantalla sin importar el ancho del viewport. */
+.cinema-mascot--corner-left,
+.cinema-mascot--corner-right {
+  transform: scale(0.78);
+}
+
+.cinema-mascot--corner-right {
+  order: 1;
+}
+
+@media (min-width: 640px) {
+  .cinema-mascot--corner-left {
+    transform: translateX(-10vw) scale(0.82);
+  }
+  .cinema-mascot--corner-right {
+    transform: translateX(10vw) scale(0.82);
+  }
+}
+
+@keyframes cinema-mascot-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+.mascot-gear {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cinema-gear-spin 4s linear infinite;
+}
+
+@keyframes cinema-gear-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   Contenido de escena (chips de stack / tarjeta de proyecto /
+   CTAs de cierre) — pequeña entrada al reemplazar el HTML.
+   ========================================================= */
+
+.cinema-stage-extra > * {
+  animation: cinema-rise-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cinema-chip {
+  animation: cinema-chip-float 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 140ms);
+}
+
+@keyframes cinema-chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+
+/* =========================================================
+   Texto — reentrada por capítulo + máquina de escribir
+   ========================================================= */
+
+.cinema-text-in {
+  animation: cinema-rise-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes cinema-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cinema-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: cinema-caret-blink 1s steps(1) infinite;
+}
+
+@keyframes cinema-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}

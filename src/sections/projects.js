@@ -23,7 +23,7 @@ function renderProjectCta(project) {
 
   return `
     <span
-      class="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full bg-[rgb(var(--accent-rgb)/0.14)] px-3 py-1.5 text-xs font-semibold text-[var(--accent)] transition duration-200 group-hover:gap-2 group-hover:bg-[rgb(var(--accent-rgb)/0.22)]"
+      class="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full bg-[rgba(var(--accent-rgb),0.14)] px-3 py-1.5 text-xs font-semibold text-[var(--accent)] transition duration-200 group-hover:gap-2 group-hover:bg-[rgba(var(--accent-rgb),0.22)]"
     >
       Ver proyecto
       <span aria-hidden="true" class="transition-transform duration-200 group-hover:translate-x-0.5">${uiIcons.arrow}</span>
@@ -41,13 +41,13 @@ function renderProjectCard(project) {
   const cardClasses = [
     "group relative flex flex-col gap-3 rounded-2xl border bg-[var(--card)] p-4 text-inherit no-underline shadow-[0_10px_35px_rgba(0,0,0,0.12)] backdrop-blur-xl transition duration-200",
     project.featured
-      ? "border-[rgb(var(--accent-rgb)/0.3)]"
+      ? "border-[rgba(var(--accent-rgb),0.3)]"
       : "border-[var(--border)]",
     project.featured ? "sm:col-span-2" : "",
     isLink
-      ? "cursor-pointer hover:-translate-y-0.5 hover:bg-[var(--card-hover)] active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent-rgb)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
+      ? "cursor-pointer hover:-translate-y-0.5 hover:bg-[var(--card-hover)] active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-rgb),0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
       : "",
-    isLink && project.featured ? "hover:border-[rgb(var(--accent-rgb)/0.5)]" : "",
+    isLink && project.featured ? "hover:border-[rgba(var(--accent-rgb),0.5)]" : "",
   ]
     .filter(Boolean)
     .join(" ");
