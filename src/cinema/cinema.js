@@ -9,6 +9,11 @@
 // El botón "X" (o Escape) dentro de la propia capa llama a exitCinema(),
 // que oculta la capa, regresa al portafolio normal y pausa la música: la
 // música solo suena mientras el modo cine está presente.
+//
+// También escucha visibilitychange: si el cine está reproduciendo y la
+// pestaña se oculta, pausa la música (congela el cine). Al volver a la
+// pestaña NO se reanuda sola — se queda congelada hasta que el usuario
+// decida continuar.
 import { renderBrandIcon } from "../icons/brands.js";
 import { uiIcons } from "../icons/ui.js";
 import { renderMascot } from "./mascot-expressions.js";
@@ -16,6 +21,8 @@ import { openingScript, loopScript } from "./cinema-script.js";
 
 const TYPE_SPEED_MS = 22;
 const MIN_RESUME_MS = 600;
+// Debe coincidir con la duración de transición de .page-shell en style.css.
+const PAGE_SHELL_TRANSITION_MS = 900;
 
 const els = {};
 let mounted = false;
@@ -38,6 +45,16 @@ function prefersReducedMotion() {
 
 function onKeydown(event) {
   if (event.key === "Escape") exitCinema();
+}
+
+// Mientras el cine está reproduciendo, ocultar la pestaña pausa la música
+// real (que a su vez congela el cine, vía pauseCinema()) — no tiene sentido
+// que siga sonando fuera de vista. Al volver a la pestaña NO se reanuda
+// sola: se queda congelada esperando a que el usuario decida continuar.
+function onVisibilityChange() {
+  if (document.hidden && isRunning) {
+    document.querySelector("#music-toggle")?.click();
+  }
 }
 
 function typeText(el, text) {
@@ -220,15 +237,41 @@ function showOverlay() {
 
 function hideOverlay() {
   els.root.classList.remove("is-open");
-  els.root.setAttribute("aria-hidden", "true");
   document.documentElement.classList.remove("cinema-active");
+
+  // El botón "X" (o el toggle de pausa) puede seguir enfocado en este punto
+  // — hay que sacar el foco de la capa ANTES de marcarla aria-hidden, o el
+  // navegador avisa que ocultó un elemento con foco. `blur()` es síncrono;
+  // el portafolio real todavía no es enfocable aquí porque su transición
+  // de `visibility` no se refleja en el mismo tick (por eso el foco se
+  // restaura después, en el siguiente frame), así que no dependemos de eso
+  // para evitar el aviso — solo quitamos el foco de la capa ya mismo.
+  if (els.root.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+
+  els.root.setAttribute("aria-hidden", "true");
   document.removeEventListener("keydown", onKeydown);
   isShown = false;
+
+  // El portafolio real (.page-shell en style.css) no se vuelve enfocable
+  // de inmediato: transiciona `visibility` y, por spec, ese cambio discreto
+  // ocurre a la MITAD de la duración de la transición (900ms), no al
+  // inicio — así que hay que esperar a que termine antes de intentar
+  // enfocar, o el .focus() simplemente no hace nada. Recién ahí movemos el
+  // foco al botón real de música, igual que closePanel() en
+  // chatbot-ui.js hace con su botón de apertura.
+  setTimeout(() => {
+    const realToggle = document.querySelector("#music-toggle");
+    if (realToggle && !realToggle.disabled) realToggle.focus();
+  }, PAGE_SHELL_TRANSITION_MS);
 }
 
 export function mountCinemaLayer() {
   if (mounted) return;
   mounted = true;
+
+  document.addEventListener("visibilitychange", onVisibilityChange);
 
   const root = document.createElement("div");
   root.className =
